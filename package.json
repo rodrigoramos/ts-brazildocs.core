@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "author": "Rodrigo Ramos Silva",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.13",
@@ -22,5 +22,9 @@
     "ts-node": "^10.9.2",
     "tsup": "^8.3.0",
     "typescript": "^5.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodrigoramos/ts-brazildocs.core.git"
   }
 }
