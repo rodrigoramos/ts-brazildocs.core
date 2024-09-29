@@ -1,6 +1,6 @@
 {
   "name": "ts-brazildocs.core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides a set of classes to handle and validate Brazilian documents",
   "main": "index.js",
   "module": "./dist/index.mjs",
