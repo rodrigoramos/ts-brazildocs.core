@@ -5,26 +5,40 @@ import { Cpf } from "./cpf";
  * @param cpf Cpf document which should be validated.
  */
 export function isCpfValid(cpf: Cpf): boolean {
-  const strCPF = cpf.toString();
-  if (strCPF == "00000000000" || strCPF.length != 11) return false;
+  const cpfAsString = cpf.toString();
 
-  let sumOfFirst9Digits: number = 0;
-  for (let i = 0; i < 9; i++)
-    sumOfFirst9Digits += parseInt(strCPF.substring(i, i + 1)) * (10 - i);
+  if (cpfAsString.length !== 11 || /^(\d)\1+$/.test(cpfAsString)) {
+    return false;
+  }
 
-  let remainder = (sumOfFirst9Digits * 10) % 11;
+  let sum: number;
+  let remainder: number;
 
-  if (remainder == 10 || remainder == 11) remainder = 0;
-  if (remainder != parseInt(strCPF.substring(9, 10))) return false;
+  // Validate the first verification digit
+  sum = 0;
+  for (let i = 1; i <= 9; i++) {
+    sum += parseInt(cpfAsString.substring(i - 1, i)) * (11 - i);
+  }
+  remainder = (sum * 10) % 11;
+  if (remainder === 10 || remainder === 11) {
+    remainder = 0;
+  }
+  if (remainder !== parseInt(cpfAsString.substring(9, 10))) {
+    return false;
+  }
 
-  let sumOfFirst10Digits = 0;
-  for (let i = 0; i < 10; i++)
-    sumOfFirst10Digits =
-      sumOfFirst9Digits + parseInt(strCPF.substring(i, i + 1)) * (11 - i);
+  // Validate the second verification digit
+  sum = 0;
+  for (let i = 1; i <= 10; i++) {
+    sum += parseInt(cpfAsString.substring(i - 1, i)) * (12 - i);
+  }
+  remainder = (sum * 10) % 11;
+  if (remainder === 10 || remainder === 11) {
+    remainder = 0;
+  }
+  if (remainder !== parseInt(cpfAsString.substring(10, 11))) {
+    return false;
+  }
 
-  remainder = (sumOfFirst10Digits * 10) % 11;
-
-  if (remainder == 10 || remainder == 11) remainder = 0;
-  if (remainder != parseInt(strCPF.substring(10, 11))) return false;
   return true;
 }
